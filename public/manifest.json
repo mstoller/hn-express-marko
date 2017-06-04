@@ -1,0 +1,16 @@
+{  
+  "short_name": "HNPWA",  
+  "name": "HNPWA",  
+  "start_url": ".",  
+  "icons": [  
+    {  
+      "src": "/images/hacker-news-logo.png",  
+      "sizes": "512x512",  
+      "type": "image/png"  
+    }
+  ],
+  "background_color": "#FAFAFA",
+  "theme_color": "#512DA8", 
+  "display": "standalone",  
+  "orientation": "portrait"  
+}

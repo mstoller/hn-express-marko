@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="manifest" href="/manifest.json">
+	<meta name="theme-color" content="#512DA8">
+
+	<title>HN PWA</title>
+	<link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+	<nav role="navigation">
+		<img src="/images/hacker-news-logo.png" width="24" height="24">
+		<h1>Hacker News</h1>
+		<ul>
+			<li><a href="/news">Home</a></li>
+			<li><a href="/newest">Newest</a></li>
+			<li><a href="/ask">Ask</a></li>
+			<li><a href="/jobs">Jobs</a></li>
+			<li><a href="/show">Show</a></li>
+		</ul>
+	</nav>
+	<div class="content" role="main">
+		<ol start="${(parseInt(data.page) * 30) - 29}" >
+		    <li for(article in data.list)>
+		        
+		        <div class="url">
+			        <a href="${article.url}">${article.title}</a>
+			        <span if(article.domain)> (domain: ${article.domain})</span>
+		        </div>
+
+		        <div class="info">
+					<p>${article.points} points by ${article.user} ${article.time_ago} | </p>
+					<p>comments: <a href="item/${article.id}">${article.comments_count}</a></p>
+		        </div>
+		    </li>
+		</ol>
+	</div>
+
+	<div class="pagination" role="navigation">
+		<a if(data.page > 1) href="/${data.contentType}/${parseInt(data.page) - 1}">previous</a>
+		<span>${data.page}</span>
+		<a href="/${data.contentType}/${parseInt(data.page) + 1}">next</a> 
+	</div>
+
+	<script>
+		
+		// if ('serviceWorker' in navigator) {
+		//   navigator.serviceWorker.register('/service-worker.js', {scope: '/'})
+		//   .then(function(reg) {
+		//     // registration worked
+		//     console.log('Registration succeeded. Scope is ' + reg.scope);
+		//   }).catch(function(error) {
+		//     // registration failed
+		//     console.log('Registration failed with ' + error);
+		//   });
+		// }
+	</script>
+</body>
+</html>
