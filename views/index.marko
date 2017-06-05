@@ -31,7 +31,7 @@
 		        </div>
 
 		        <div class="info">
-					<p>${article.points} points by ${article.user} ${article.time_ago} | </p>
+					<p><if (article.points)>${article.points} points</if><if (article.user)> by ${article.user}</if> ${article.time_ago} | </p>
 					<p>comments: <a href="item/${article.id}">${article.comments_count}</a></p>
 		        </div>
 		    </li>
