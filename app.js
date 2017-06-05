@@ -36,12 +36,16 @@ var validContentTypes = [
 
 app.use(markoExpress()); //enable res.marko(template, data)
 
-// http express server to redirect our traffic 
-// var http = require('http');
-// http.createServer(function (req, res) {
-//     res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
-//     res.end();
-// }).listen(80);
+/* At the top, with other redirect methods before other routes */
+// https://stackoverflow.com/questions/7185074/heroku-nodejs-http-to-https-ssl-forced-redirect
+app.get('*',function(req,res,next){
+  if (req.headers['x-forwarded-proto'] !== 'https' && process.env.ENV = 'production') {
+    res.redirect('https://hn-express-marko.herokuapp.com/' + req.url)
+  }
+  else {
+    next() /* Continue to other routes if we're not redirecting */
+  }
+})
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
