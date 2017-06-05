@@ -40,7 +40,7 @@ app.use(markoExpress()); //enable res.marko(template, data)
 // https://stackoverflow.com/questions/7185074/heroku-nodejs-http-to-https-ssl-forced-redirect
 app.get('*',function(req,res,next){
   if (req.headers['x-forwarded-proto'] !== 'https' && process.env.ENV = 'production') {
-    res.redirect('https://hn-express-marko.herokuapp.com/' + req.url)
+    res.redirect(['https://', req.get('Host'), req.url].join(''));
   }
   else {
     next() /* Continue to other routes if we're not redirecting */
