@@ -1,7 +1,7 @@
 {  
   "short_name": "HNPWA",  
   "name": "HNPWA",  
-  "start_url": ".",  
+  "start_url": "/news",  
   "icons": [  
     {  
       "src": "/images/hacker-news-logo.png",  

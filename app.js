@@ -43,7 +43,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(compression())
+app.use(compression({
+  threshold : 0
+}));
 
 /* At the top, with other redirect methods before other routes */
 // https://stackoverflow.com/questions/7185074/heroku-nodejs-http-to-https-ssl-forced-redirect
