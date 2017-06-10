@@ -1,32 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="manifest" href="manifest.json">
-	<meta name="theme-color" content="#512DA8">
-
-	<title>HN PWA</title>
-</head>
-<body>
-	<ol>
-		<h1>${data.item.title}</h1>
-		<h2>${data.item.domain}</h2>
-	    <li for(comment in data.item.comments)>
-	        - top level comment comment
-	    </li>
-	</ol>
-	<script>
-		if ('serviceWorker' in navigator) {
-		  navigator.serviceWorker.register('/service-worker.js', {scope: '/'})
-		  .then(function(reg) {
-		    // registration worked
-		    console.log('Registration succeeded. Scope is ' + reg.scope);
-		  }).catch(function(error) {
-		    // registration failed
-		    console.log('Registration failed with ' + error);
-		  });
-		}
-	</script>
-</body>
-</html>
+<include('./shell.marko')>
+    <@body>
+		<p>${data.item.title} <span class="domain">${data.item.domain}</span></p>
+	    <div for(comment in data.item.comments)>  
+        	<include('./comment.marko', comment)  />
+        </div>
+	</@body>
+</include>

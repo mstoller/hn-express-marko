@@ -1,6 +1,11 @@
 body, html, p {
 	padding: 0;
 	margin: 0;
+    font-size: 16px;
+}
+
+p {
+    margin: 0 0 8px 0;
 }
 
 /* System Fonts as used by Medium and WordPress */
@@ -54,7 +59,12 @@ nav .homeLink  {
 }
 
 .content {
-    padding-right: 15px;
+    padding: 20px;
+}
+
+.content ol {
+    padding: 0 20px;
+    margin-top: 0;
 }
 
 .content ol li .info {
@@ -81,4 +91,51 @@ nav .homeLink  {
 
 .pagination span, .pagination a {
 	margin-right: 5px;
+}
+
+.comment {
+    margin: 20px 0 0 14px;
+    position: relative;
+}
+
+.comment p {
+    padding-left: 16px;
+    font-size: .9rem;
+}
+
+
+
+.comment input {
+    cursor: pointer;
+    position: absolute;
+    top: -12px;
+    left: -14px;
+    width: 20px;
+    height: 30px;
+    opacity: 0;
+    z-index: 1;
+}
+
+.comment .byline:before {
+    position: absolute;
+    top: 0;
+    left: -14px;
+    content: '[-]';
+    cursor: pointer;
+}
+
+.show-hide-container {
+    transform: scaleY(1);
+    transition: transform 0.26s ease;
+}
+
+.comment input:checked+.show-hide-container {
+    transform: scaleY(0);    
+    // transform-origin: top;
+    transition: transform 0.26s ease;
+    height: 0;
+}
+
+.comment input:checked+.byline:before { 
+    content: '[|]';
 }

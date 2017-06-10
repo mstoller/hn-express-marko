@@ -2,9 +2,9 @@
 var request = require('request');
 // http://node-hnapi.herokuapp.com/news?page=1
 var list = {
-	url: 'http://node-hnapi.herokuapp.com/',
+	url: 'http://node-hnapi.herokuapp.com',
 	getList: function(listType, page = 1) { 
-		const url = `${this.url}${listType}?page=${page}`;
+		const url = `${this.url}/${listType}?page=${page}`;
 		return new Promise((resolve, reject) => { 
 			request.get({
 			    url: url,

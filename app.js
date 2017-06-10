@@ -6,9 +6,9 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var compression = require('compression');
 
-var app = express();
-
+var app = express()
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 
@@ -18,6 +18,7 @@ app.set('view engine', 'marko');
 var template = {
   index: require('./views/index.marko'),
   item: require('./views/item.marko'),
+  user: require('./views/user.marko'),
   error: require('./views/error.marko')
 };
 
@@ -34,34 +35,52 @@ var validContentTypes = [
   'newest'
 ]
 
+
 app.use(markoExpress()); //enable res.marko(template, data)
+
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(compression())
 
 /* At the top, with other redirect methods before other routes */
 // https://stackoverflow.com/questions/7185074/heroku-nodejs-http-to-https-ssl-forced-redirect
 app.get('*',function(req,res,next){
   if (req.headers['x-forwarded-proto'] !== 'https' && process.env.ENV === 'production') {
     res.redirect(['https://', req.get('Host'), req.url].join(''));
-  }
-  else {
-    next() /* Continue to other routes if we're not redirecting */
+  } else {
+    // We're https, 
+    // add some global variables for use in front end
+    global.ENV =  process.env.ENV;
+    if(process.env.ENV === 'development') {
+      global.refresh_url = process.env.BROWSER_REFRESH_URL;
+    }
+    next();
   }
 })
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-
 app.get('/item/:id', function(req, res) {
   const item = req.params.id;
-  const itemData = api.item.getItem(item);
+  const itemData = api.item.getItem('item', item);
   itemData.then((data) => {
-    console.log(data)
     res.marko(template.item, {
       item: data
+    })
+  }).catch((err) => {
+    console.log(err);
+    res.redirect('/error');
+  });
+});
+
+app.get('/user/:id', function(req, res) {
+  const user = req.params.id;
+  const itemData = api.item.getItem('user', user);
+  itemData.then((data) => {
+    console.log(data);
+    res.marko(template.user, {
+      user: data
     })
   }).catch((err) => {
     console.log(err);

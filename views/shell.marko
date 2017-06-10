@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="manifest" href="/manifest.json">
+	<meta name="theme-color" content="#512DA8">
+	<link rel="icon" type="image/png" href="/images/hacker-news-logo-small.png" />
+
+	<title>HN PWA</title>
+	<link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body>
+	<nav role="navigation">
+		<a href="/news" class="homeLink"><img src="/images/hacker-news-logo-small.png" width="18" height="18" alt="Hacker News Logo">
+		<h1>Hacker News</h1></a>
+		<ul>
+			<!-- <li><a href="/news">Home</a></li> -->
+			<li><a href="/newest">Newest</a></li>
+			<li><a href="/ask">Ask</a></li>
+			<li><a href="/jobs">Jobs</a></li>
+			<li><a href="/show">Show</a></li>
+		</ul>
+	</nav>
+	<div class="content" role="main">
+        <include(input.body) />
+	</div>
+	<script>
+		
+		if ('serviceWorker' in navigator) {
+		  navigator.serviceWorker.register('/service-worker.js', {scope: '/'})
+		  .then(function(reg) {
+		    // registration worked
+		    console.log('Registration succeeded. Scope is ' + reg.scope);
+		  }).catch(function(error) {
+		    // registration failed
+		    console.log('Registration failed with ' + error);
+		  });
+		}
+	</script>
+
+	<if(ENV === 'development')>
+		<script src="${refresh_url}"></script>
+	</if>
+
+	<script src="/javascripts/bundle.js"></script>
+</body>
+</html>

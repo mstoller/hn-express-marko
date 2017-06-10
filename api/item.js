@@ -2,9 +2,9 @@
 var request = require('request');
 
 var item = {
-	url: 'http://node-hnapi.herokuapp.com/item/',
-	getItem: function(item) { 
-		const url = this.url + item;
+	url: 'http://node-hnapi.herokuapp.com',
+	getItem: function(itemType, item) { 
+		const url = `${this.url}/${itemType}/${item}`;
 		return new Promise((resolve, reject) => { 
 			request.get({
 			    url: url,

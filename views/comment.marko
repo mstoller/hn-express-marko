@@ -1,0 +1,10 @@
+<div class="comment">
+	<p class="byline"><span class="user"><a href="/user/${data.user}">${data.user}</a></span> <span>${data.time_ago}</span></p>
+	<input type="checkbox" aria-label="commentVisible">
+	<div class="show-hide-container">
+		$!{data.content}
+		<for(comment in data.comments)>
+	    	<include('./comment.marko', comment)  />
+		</for>
+	</div>
+</div>
